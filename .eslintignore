@@ -1,0 +1,4 @@
+build/*.js
+mock/*.js
+config/*.js
+dist/*.js

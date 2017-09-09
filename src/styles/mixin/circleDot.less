@@ -1,0 +1,13 @@
+// 设置圆角弧度
+.borderRadius(@radius) {
+  border-radius: @radius;
+}
+
+// 圆点，大小和颜色
+.circleDot(@size:.62rem, @color:#F02B2B){
+  display: block;
+  width:@size ;
+  height:@size ;
+  background: @color;
+  .borderRadius(50%);
+}

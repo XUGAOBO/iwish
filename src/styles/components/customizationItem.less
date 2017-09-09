@@ -1,0 +1,30 @@
+@charset "utf-8";
+.customizationItem {
+    .customizationItem__wrapper {
+        display: -webkit-box;
+        display: flex;
+        -webkit-box-align: center;
+        justify-content: center;
+    }
+
+    .diy__imgContainer {
+        display: inline-block;
+        position: relative;
+        width: 1.2rem;
+        height: 1.2rem;
+        overflow: hidden;
+        border-radius: 50%;
+        >img {
+            width:auto;
+            max-width: none;
+            height:100%;
+            margin-left:-50%;
+        }
+    }
+
+    .customizationItem__name {
+        margin: .2rem 0;
+        font-size: @fontSize13;
+        text-align: center;
+    }
+}
