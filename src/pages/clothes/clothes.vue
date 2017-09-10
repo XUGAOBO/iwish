@@ -169,7 +169,6 @@
           return;
         }
         this.selectType = key;
-        // let sizeId = cache.local.get(LOCAL_KEY.SIZE_ID);
         if (this.selectType === '2') {
           let clothesId = this.hasClothesId();
           getClothesFabric(clothesId, styleId)
@@ -210,7 +209,7 @@
         }
       },
       selectClothesType(item) {
-        if (item.enable) {
+        if ((item.hasOwnProperty('enable') && item.enable) || !item.hasOwnProperty('enable')) {
           switch (this.selectType) {
             case '1':
               cache.local.set(LOCAL_KEY.STYLE_ID, item.key)
