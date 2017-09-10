@@ -6,7 +6,9 @@
         <img :src="selectImg()" />
       </div>
       <div class="clothes__type">
-        <SelectType v-for="(item, index) in selectTypeList" :dataSource="item" :key="index" @changeType="changeClothesType" />
+        <SelectType v-for="(item, index) in selectTypeList" :dataSource="item" :key="index" @changeType="changeClothesType">
+          <img :src="imgUrl(item.imgName)" class='img__deselect' :class="{'img__select': item.key === selectType}" />
+        </SelectType>
       </div>
     </div>
     <div v-if=" selectType === '1' ">
@@ -102,7 +104,7 @@
         dataSource: [],
         selectTypeList: [{
           key: '1',
-          imgName: 'styleSelect',
+          imgName: 'style',
           name: '款式'
         }, {
           key: '2',
@@ -121,6 +123,9 @@
       };
     },
     methods: {
+      imgUrl: function (img) {
+        return require(`../../../static/${img}.png`)
+      },
       selectImg() {
         let img = this.clothesImg[this.selectType];
         if (!img) {
@@ -166,39 +171,41 @@
         this.selectType = key;
         // let sizeId = cache.local.get(LOCAL_KEY.SIZE_ID);
         if (this.selectType === '2') {
-          let selectItem = this.clothesParam[this.selectType];
           let clothesId = this.hasClothesId();
-          getClothesFabric(clothesId, selectItem)
+          getClothesFabric(clothesId, styleId)
             .then(resp => {
               let data = resp || [];
-              this.speciesImgList = [];
-              this.sizePo = {};
-              data.map((item, index) => {
-                if (index === 0) {
-                  this.defaultImg['2'] = item.itemImg;
-                  this.defaultImg['3'] = item.itemImg;
-                }
-                this.speciesImgList.push({
-                  key: item.fabricNo,
-                  imgUrl: item.itemImg, // 衣服样式的图片
-                  name: item.itemName // 衣服样式的名称
-                });
+              if (data.length > 0) {
+                this.speciesImgList = [];
+                this.sizePo = {};
+                data.map((item, index) => {
+                  if (index === 0) {
+                    this.defaultImg['2'] = item.itemImg;
+                    this.defaultImg['3'] = item.itemImg;
+                  }
+                  this.speciesImgList.push({
+                    key: item.fabricNo,
+                    imgUrl: item.itemImg, // 衣服样式的图片
+                    name: item.itemName // 衣服样式的名称
+                  });
 
-                let size = item.size,
-                  sizeList = []; // 每个款式对应的尺寸集合
-                if (size) {
-                  size.split(',').map((item) => {
-                    sizeList.push({
-                      key: item,
-                      name: item
+                  let size = item.size,
+                    sizeList = []; // 每个款式对应的尺寸集合
+                  if (size) {
+                    size.split(',').map((item) => {
+                      sizeList.push({
+                        key: item,
+                        name: item
+                      })
                     })
+                  }
+                  Object.assign(this.sizePo, {
+                    [item.fabricNo]: sizeList
                   })
-                }
-                Object.assign(this.sizePo, {
-                  [item.fabricNo]: sizeList
                 })
-
-              })
+              } else {
+                this.shoToast(DATA_ERROR_EXCEPTION);
+              }
             })
         }
       },
@@ -253,20 +260,6 @@
         if (val === '3') {
           this.sizeList = this.sizePo[this.clothesParam['2']];
         }
-        this.selectTypeList.map((item) => {
-          let name = item.imgName;
-          if (item.key === val) {
-            if (name.indexOf('Select') > -1) {
-              item.imgName = name.split('Select')[0];
-            } else {
-              item.imgName = `${name}Select`
-            }
-          } else {
-            if (name.indexOf('Select') > -1) {
-              item.imgName = name.split('Select')[0];
-            }
-          }
-        })
       }
     },
     created() {
