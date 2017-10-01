@@ -6,9 +6,7 @@
         <img :src="selectImg()" />
       </div>
     </div>
-    <div>
-      <ServiceTip />
-    </div>
+    <ServiceTip />
     <h3 class="order__type--title">选择图案</h3>
     <div class="order__item">
       <div class="order__item--container">

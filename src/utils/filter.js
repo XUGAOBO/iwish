@@ -14,5 +14,8 @@ export default {
       return format(value, 'WW')
     }
     return ''
+  },
+  formatPrice(value) {
+    return `¥${value}`
   }
 }

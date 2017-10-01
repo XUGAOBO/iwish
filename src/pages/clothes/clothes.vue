@@ -1,59 +1,63 @@
 <template>
   <div class="clothes">
     <ClothesHeader />
-    <div class="wrapper">
-      <div class="main__img">
-        <img :src="selectImg()" />
+    <div class="content">
+      <div class="wrapper">
+        <div class="main__img">
+          <img :src="selectImg()" />
+        </div>
+        <div class="clothes__type">
+          <SelectType v-for="(item, index) in selectTypeList" :dataSource="item" :key="index" @changeType="changeClothesType">
+            <img :src="imgUrl(item)" class='img__deselect' />
+          </SelectType>
+        </div>
       </div>
-      <div class="clothes__type">
-        <SelectType v-for="(item, index) in selectTypeList" :dataSource="item" :key="index" @changeType="changeClothesType">
-          <img :src="imgUrl(item)" class='img__deselect' />
-        </SelectType>
-      </div>
-    </div>
-    <div>
+      <ClothesDetail :dataSource="selectClothesInfo()" />
       <ServiceTip />
-    </div>
-    <div v-if=" selectType === '1' ">
-      <div>
-        <span class="clothes__type--title">款式</span>
-      </div>
-      <div class="clothes__item">
-        <div class="container">
-          <SelectItem v-for="(item, index) in styleImgList" :dataSource="item" :key="index" :selectKey="selectKey" @selectType="selectClothesType(item)">
-            <CoverImg :status="item.enable" tip="暂无">
-              <img :src="item.imgUrl" class="container__img" />
-            </CoverImg>
-          </SelectItem>
+      <div v-if=" selectType === '1' ">
+        <div>
+          <span class="clothes__type--title">款式</span>
+        </div>
+        <div class="clothes__item">
+          <div class="container">
+            <SelectItem v-for="(item, index) in styleImgList" :dataSource="item" :key="index" :selectKey="selectKey" @selectType="selectClothesType(item)">
+              <CoverImg :status="item.enable" tip="暂无">
+                <img :src="item.imgUrl" class="container__img" />
+              </CoverImg>
+            </SelectItem>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-if=" selectType === '2' ">
-      <div>
-        <span class="clothes__type--title">材质</span>
-      </div>
-      <div class="clothes__item">
-        <div class="container">
-          <SelectItem v-for="(item, index) in speciesImgList" :dataSource="item" :key="index" :selectKey="selectKey" @selectType="selectClothesType(item)">
-            <CoverImg :status="item.enable" tip="暂无">
-              <img :src="item.imgUrl" class="container__img" />
-            </CoverImg>
-          </SelectItem>
+      <div v-if=" selectType === '2' ">
+        <div>
+          <span class="clothes__type--title">面料</span>
+        </div>
+        <div class="clothes__item">
+          <div class="container">
+            <SelectItem v-for="(item, index) in speciesImgList" :dataSource="item" :key="index" :selectKey="selectKey" @selectType="selectClothesType(item)">
+              <CoverImg :status="item.enable" tip="暂无">
+                <img :src="item.imgUrl" class="container__img" />
+              </CoverImg>
+            </SelectItem>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-if=" selectType === '3' ">
-      <div>
-        <span class="clothes__type--title">尺码</span>
-      </div>
-      <div class="clothes__item">
-        <div class="container">
-          <SelectItem v-for="(item, index) in sizeList" :dataSource="item" :key="index" :selectKey="selectKey" @selectType="selectClothesType(item)">
-            <CoverImg :status="item.enable" tip="暂无">
-              <div class="container__size">{{item.name}}</div>
-            </CoverImg>
-          </SelectItem>
+      <div v-if=" selectType === '3' ">
+        <div>
+          <span class="clothes__type--title">尺码</span>
         </div>
+        <div class="clothes__item">
+          <div class="container">
+            <SelectItem v-for="(item, index) in sizeList" :dataSource="item" :key="index" :selectKey="selectKey" @selectType="selectClothesType(item)">
+              <CoverImg :status="item.enable" tip="暂无">
+                <div class="container__size">{{item.name}}</div>
+              </CoverImg>
+            </SelectItem>
+          </div>
+        </div>
+      </div>
+      <div v-for="(item, index) in selectClothesDetail()" :key="index">
+        <img :src="item" />
       </div>
     </div>
     <div class="clothes__next">
@@ -72,6 +76,8 @@
   import SelectItem from 'Components/SelectItem/selectItem.vue';
   import CoverImg from 'Components/CoverImg/coverImg.vue';
   import ServiceTip from 'Components/ServiceTip/serviceTip.vue';
+  import ClothesDetail from 'Components/ClothesDetail/clothesDetail.vue';
+//   import BScroll from 'better-scroll'
   import {
     getClothes,
     getClothesFabric
@@ -94,7 +100,8 @@
       SelectItem,
       ClothesHeader,
       CoverImg,
-      ServiceTip
+      ServiceTip,
+      ClothesDetail
     },
     computed: mapState({
       clothesParam: state => state.clothes.clothesParam,
@@ -124,12 +131,22 @@
         speciesImgList: [], // 材质
         sizePo: {},
         sizeList: [],
-        defaultImg: {}
+        defaultImg: {},
+        clothesDetail: {}, // 衣服详情
+        clothesInfo: {} // 衣服信息(包括价格, 简述, 详细描述)
       };
     },
     methods: {
+      selectClothesDetail() {
+        let styleId = cache.local.get(LOCAL_KEY.STYLE_ID)
+        return this.clothesDetail[styleId]
+      },
+      selectClothesInfo() {
+        let styleId = cache.local.get(LOCAL_KEY.STYLE_ID)
+        return this.clothesInfo[styleId] || {}
+      },
       imgUrl: function (item) {
-          let img = item.key === this.selectType ? `${item.imgName}_select` : item.imgName;
+        let img = item.key === this.selectType ? `${item.imgName}_select` : item.imgName;
         return require(`../../../static/${img}.png`)
       },
       selectImg() {
@@ -278,6 +295,12 @@
               if (index === 0) {
                 this.defaultImg['1'] = item.img;
               }
+              this.clothesDetail[item.styleNo] = item.imgUrlList; // 衣服详情
+              this.clothesInfo[item.styleNo] = {
+                  price: item.sellPrice, // 价格
+                  brief: item.styleName, // 简述
+                  desc: item.itemMsg // 详细描述
+              };
               return {
                 key: item.styleNo,
                 imgUrl: item.img, // 衣服样式的图片
@@ -290,6 +313,11 @@
           }
         })
     }
+    // mounted() {
+    //   this.$nextTick(() => {
+    //     this.scroll = new BScroll(this.$refs.wrapper, {})
+    //   })
+    // }
   };
 
 </script>
