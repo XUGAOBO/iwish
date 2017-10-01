@@ -6,6 +6,9 @@
         <img :src="selectImg()" />
       </div>
     </div>
+    <div>
+      <ServiceTip />
+    </div>
     <h3 class="order__type--title">选择图案</h3>
     <div class="order__item">
       <div class="order__item--container">
@@ -26,6 +29,7 @@
   import ClothesHeader from 'Components/Header/header.vue';
   import SelectItem from 'Components/SelectItem/selectItem.vue';
   import CoverImg from 'Components/CoverImg/coverImg.vue';
+  import ServiceTip from 'Components/ServiceTip/serviceTip.vue';
   import {
     LOCAL_KEY
   } from 'Utils/constants';
@@ -42,7 +46,8 @@
     components: {
       SelectItem,
       ClothesHeader,
-      CoverImg
+      CoverImg,
+      ServiceTip
     },
     data() {
       return {

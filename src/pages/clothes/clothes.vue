@@ -11,6 +11,9 @@
         </SelectType>
       </div>
     </div>
+    <div>
+      <ServiceTip />
+    </div>
     <div v-if=" selectType === '1' ">
       <div>
         <span class="clothes__type--title">款式</span>
@@ -68,6 +71,7 @@
   import SelectType from 'Components/SelectType/selectType.vue';
   import SelectItem from 'Components/SelectItem/selectItem.vue';
   import CoverImg from 'Components/CoverImg/coverImg.vue';
+  import ServiceTip from 'Components/ServiceTip/serviceTip.vue';
   import {
     getClothes,
     getClothesFabric
@@ -89,7 +93,8 @@
       SelectType,
       SelectItem,
       ClothesHeader,
-      CoverImg
+      CoverImg,
+      ServiceTip
     },
     computed: mapState({
       clothesParam: state => state.clothes.clothesParam,
@@ -109,7 +114,7 @@
         }, {
           key: '2',
           imgName: 'fabric',
-          name: '材质'
+          name: '面料'
         }, {
           key: '3',
           imgName: 'size',

@@ -2,9 +2,7 @@
   <div class="selectType" @click="select(key)">
     <div class="img__size">
       <slot></slot>
-      <!--
       <p class="selectType__name">{{name}}</p>
-        -->
     </div>
   </div>
 </template>
