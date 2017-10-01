@@ -7,7 +7,7 @@
       </div>
       <div class="clothes__type">
         <SelectType v-for="(item, index) in selectTypeList" :dataSource="item" :key="index" @changeType="changeClothesType">
-          <img :src="imgUrl(item.imgName)" class='img__deselect' :class="{'img__select': item.key === selectType}" />
+          <img :src="imgUrl(item)" class='img__deselect' />
         </SelectType>
       </div>
     </div>
@@ -128,7 +128,8 @@
       };
     },
     methods: {
-      imgUrl: function (img) {
+      imgUrl: function (item) {
+          let img = item.key === this.selectType ? `${item.imgName}_select` : item.imgName;
         return require(`../../../static/${img}.png`)
       },
       selectImg() {
