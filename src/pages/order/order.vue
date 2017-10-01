@@ -10,11 +10,13 @@
     <div class="order__item">
       <div class="order__item--container">
         <SelectItem v-for="(item, index) in selectItemList" :dataSource="item" :key="index" :selectKey="selectKey" @selectType="selectClothesType(item)">
-          <img :src="item.imgUrl" class="container__img" />
+          <CoverImg :status="item.enable" tip="暂无">
+            <img :src="item.imgUrl" class="container__img" />
+          </CoverImg>
         </SelectItem>
       </div>
     </div>
-    <div class="order__pay" @click="pay">下单</div>
+    <div class="order__pay" @click="pay">立即支付</div>
   </div>
 </template>
 <script>
@@ -23,6 +25,7 @@
   } from 'vuex'
   import ClothesHeader from 'Components/Header/header.vue';
   import SelectItem from 'Components/SelectItem/selectItem.vue';
+  import CoverImg from 'Components/CoverImg/coverImg.vue';
   import {
     LOCAL_KEY
   } from 'Utils/constants';
@@ -38,7 +41,8 @@
   export default {
     components: {
       SelectItem,
-      ClothesHeader
+      ClothesHeader,
+      CoverImg
     },
     data() {
       return {
@@ -95,14 +99,16 @@
           })
       },
       selectClothesType(item) {
-        let po = {
-          partternId: item.key
+        if (item.enable) {
+          let po = {
+            partternId: item.key
+          }
+          cache.local.set(LOCAL_KEY.PATTERN_ID, item.key);
+          this.$store.dispatch('selectClothesType', po);
+          this.$store.dispatch('selectClothesImg', {
+            partternId: item.imgUrl
+          })
         }
-        cache.local.set(LOCAL_KEY.PATTERN_ID, item.key);
-        this.$store.dispatch('selectClothesType', po);
-        this.$store.dispatch('selectClothesImg', {
-          partternId: item.imgUrl
-        })
       }
     },
     created() {
@@ -119,7 +125,8 @@
             return {
               key: item.itemNo, // 图案id
               imgUrl: item.itemImg, // 衣服样式的图片
-              name: item.itemName // 衣服样式的名称
+              name: item.itemName, // 衣服样式的名称
+              enable: item.enable
             }
           })
         })

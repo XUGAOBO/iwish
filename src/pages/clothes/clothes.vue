@@ -54,7 +54,7 @@
       </div>
     </div>
     <div class="clothes__next">
-      <p class="pay" @click="pay">下单</p>
+      <p class="pay" @click="pay">立即支付</p>
       <p class="empty__block"></p>
       <p class="next" @click="nextStep">下一步</p>
     </div>

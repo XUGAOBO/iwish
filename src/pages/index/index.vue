@@ -11,7 +11,9 @@
         <p class="menu__item--name">{{item.catename}}</p>
       </div>
     </div>
+    <!--
     <div class="menu__tip">选择一个种类开始定制吧</div>
+    -->
   </div>
 </template>
 <script>
