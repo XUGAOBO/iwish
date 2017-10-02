@@ -49,7 +49,9 @@
       }
     },
     mounted() {
-      getDiyTypes()
+        let styleNo = cache.local.get(LOCAL_KEY.STYLE_ID);
+        let fabricNo = cache.local.get(LOCAL_KEY.FABRIC_ID);
+      getDiyTypes(styleNo, fabricNo)
         .then(resp => {
           let data = resp || [];
           data.forEach((item) => {

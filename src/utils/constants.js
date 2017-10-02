@@ -12,6 +12,7 @@ export const LOCAL_KEY = {
   FABRIC_ID: 'fabricId', // 面料id
   SIZE_ID: 'sizeId', // 款式大小id
   PATTERN_ID: 'patternId', // 图案id
-  DIY_ID: 'diyId' // diy  id
+  DIY_STYLE_ID: 'diyStyleId', // diy样式
+  DIY_ID: 'diyId' // diy id
 };
 export const DATA_INCOMPLETE__EXCEPTION = '请完善信息~'

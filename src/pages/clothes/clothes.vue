@@ -56,9 +56,7 @@
           </div>
         </div>
       </div>
-      <div v-for="(item, index) in selectClothesDetail()" :key="index">
-        <img :src="item" />
-      </div>
+      <img :src="item" v-for="(item, index) in selectClothesDetail()" :key="index" />
     </div>
     <div class="clothes__next">
       <p class="pay" @click="pay">立即支付</p>
@@ -77,7 +75,7 @@
   import CoverImg from 'Components/CoverImg/coverImg.vue';
   import ServiceTip from 'Components/ServiceTip/serviceTip.vue';
   import ClothesDetail from 'Components/ClothesDetail/clothesDetail.vue';
-//   import BScroll from 'better-scroll'
+  //   import BScroll from 'better-scroll'
   import {
     getClothes,
     getClothesFabric
@@ -297,9 +295,9 @@
               }
               this.clothesDetail[item.styleNo] = item.imgUrlList; // 衣服详情
               this.clothesInfo[item.styleNo] = {
-                  price: item.sellPrice, // 价格
-                  brief: item.styleName, // 简述
-                  desc: item.itemMsg // 详细描述
+                price: item.sellPrice, // 价格
+                brief: item.styleName, // 简述
+                desc: item.itemMsg // 详细描述
               };
               return {
                 key: item.styleNo,

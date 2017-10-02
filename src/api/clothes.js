@@ -8,6 +8,6 @@ export const getClothesFabric = (id, type) => {
   return http.get(`diy/basic/${id}/${type}`)
 }
 
-export const getDiyTypes = () => {
-  return http.get(`diy/diyTypes`)
+export const getDiyTypes = (styleNo, fabricNo) => {
+  return http.get(`diy/diyTypes/${styleNo}/${fabricNo}`)
 }
