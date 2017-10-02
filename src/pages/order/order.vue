@@ -154,7 +154,7 @@
           if (type === LOCAL_KEY.DIY_STYLE_ID) {
             cache.local.set(LOCAL_KEY.PATTERN_ID, '');
             this.$store.dispatch('selectClothesType', {
-                [LOCAL_KEY.PATTERN_ID]: ''
+              [LOCAL_KEY.PATTERN_ID]: ''
             });
             this.$store.dispatch('selectClothesImg', {
               [type]: item.imgUrl
@@ -180,7 +180,6 @@
       }
     },
     created() {
-      //   let clothesId = this.hasClothesId();
       let styleId = cache.local.get(LOCAL_KEY.STYLE_ID);
       let diyId = this.hasDiyId();
       let fabricId = this.hasFabricId();

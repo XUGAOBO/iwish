@@ -23,6 +23,9 @@ const actions = {
     state
   }) {
     commit(types.RECEIVE_CLEAR_PARAMS)
+  },
+  clearClothesImg({commit, state}) {
+      commit(types.RECEIVE_CLEAR_CLOTHES_IMG)
   }
 }
 
@@ -36,6 +39,9 @@ const mutations = {
   [types.RECEIVE_CLEAR_PARAMS](state) {
     state.clothesParam = {};
     state.clothesImg = {};
+  },
+  [types.RECEIVE_CLEAR_CLOTHES_IMG](state) {
+      state.clothesImg = {};
   }
 }
 

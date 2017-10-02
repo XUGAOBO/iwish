@@ -37,6 +37,10 @@
     },
     methods: {
       getDiyId(diyId) {
+        let oldDiyId = cache.local.get(LOCAL_KEY.DIY_ID);
+        if (diyId !== oldDiyId) {
+            this.$store.dispatch('clearClothesImg')
+        }
         cache.local.set(LOCAL_KEY.DIY_ID, diyId);
         this.$router.push({
           path: '/order'
