@@ -1,14 +1,20 @@
 <template>
   <div class="customizationItem">
     <div class="diy__imgContainer">
-      <img :src="imgUrl" class="diy__img" />
+      <CoverImg :status="enable" tip="暂无">
+        <img :src="imgUrl" class="diy__img" />
+      </CoverImg>
     </div>
     <p class="customizationItem__name">{{name}}</p>
   </div>
 </template>
 <script>
+  import CoverImg from 'Components/CoverImg/coverImg.vue';
   export default {
     props: ['dataSource'],
+    components: {
+      CoverImg
+    },
     data() {
       return {
 
@@ -23,6 +29,9 @@
       },
       name: function () {
         return this.dataSource.name
+      },
+      enable: function () {
+          return this.dataSource.enable
       }
     }
   }

@@ -1,31 +1,33 @@
 <template>
   <div class="order">
     <ClothesHeader />
-    <div class="order__wrapper">
-      <div class="order__img">
-        <img :src="selectImg()" />
+    <div class="order-container">
+      <div class="order__wrapper">
+        <div class="order__img">
+          <img :src="selectImg()" />
+        </div>
       </div>
-    </div>
-    <ClothesDetail :dataSource="selectDiyStyle()" />
-    <ServiceTip />
-    <h3 class="order__type--title">选择样式</h3>
-    <div class="order__item">
-      <div class="order__item--container">
-        <SelectItem v-for="(item, index) in diyStyleList" :dataSource="item" :key="index" :selectKey="selectKey" @selectType="selectClothesType(item, localKey.DIY_STYLE_ID)">
-          <CoverImg :status="item.enable" tip="暂无">
-            <img :src="item.imgUrl" class="container__img" />
-          </CoverImg>
-        </SelectItem>
+      <ClothesDetail :dataSource="selectDiyStyle()" />
+      <ServiceTip />
+      <h3 class="order__type--title">选择样式</h3>
+      <div class="order__item">
+        <div class="order__item--container">
+          <SelectItem v-for="(item, index) in diyStyleList" :dataSource="item" :key="index" :selectKey="selectKey" @selectType="selectClothesType(item, localKey.DIY_STYLE_ID)">
+            <CoverImg :status="item.enable" tip="暂无">
+              <img :src="item.imgUrl" class="container__img" />
+            </CoverImg>
+          </SelectItem>
+        </div>
       </div>
-    </div>
-    <h3 class="order__type--title" v-if="selectItemList && selectItemList.length > 0">选择图案</h3>
-    <div class="order__item">
-      <div class="order__item--container">
-        <SelectItem v-for="(item, index) in selectItemList" :dataSource="item" :key="index" :selectKey="selectPatternKey" @selectType="selectClothesType(item, localKey.PATTERN_ID)">
-          <CoverImg :status="item.enable" tip="暂无">
-            <img :src="item.imgUrl" class="container__img" />
-          </CoverImg>
-        </SelectItem>
+      <h3 class="order__type--title" v-if="selectItemList && selectItemList.length > 0">选择图案</h3>
+      <div class="order__item">
+        <div class="order__item--container">
+          <SelectItem v-for="(item, index) in selectItemList" :dataSource="item" :key="index" :selectKey="selectPatternKey" @selectType="selectClothesType(item, localKey.PATTERN_ID)">
+            <CoverImg :status="item.enable" tip="暂无">
+              <img :src="item.imgUrl" class="container__img" />
+            </CoverImg>
+          </SelectItem>
+        </div>
       </div>
     </div>
     <div class="order__pay" @click="pay">立即支付</div>

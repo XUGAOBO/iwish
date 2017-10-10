@@ -7,7 +7,7 @@
     <h3 class="specialCustomization__title">其他个性化定制</h3>
     <div class="specialCustomization__item">
       <div v-for="(item, index) in selectItemList" :key="index" class="specialCustomization__item--margin">
-        <div @click="getDiyId(item.key)">
+        <div @click="getDiyId(item.key, item)">
           <CustomizationItem :dataSource="item" />
         </div>
       </div>
@@ -36,25 +36,27 @@
       }
     },
     methods: {
-      getDiyId(diyId) {
-        let oldDiyId = cache.local.get(LOCAL_KEY.DIY_ID);
-        if (diyId !== oldDiyId) {
+      getDiyId(diyId, item) {
+        if (item.enable) {
+          let oldDiyId = cache.local.get(LOCAL_KEY.DIY_ID);
+          if (diyId !== oldDiyId) {
             this.$store.dispatch('clearClothesImg')
+          }
+          cache.local.set(LOCAL_KEY.DIY_ID, diyId);
+          this.$router.push({
+            path: '/order'
+          })
         }
-        cache.local.set(LOCAL_KEY.DIY_ID, diyId);
-        this.$router.push({
-          path: '/order'
-        })
       },
       previous() {
-         this.$router.push({
+        this.$router.push({
           path: '/clothes'
         })
       }
     },
     mounted() {
-        let styleNo = cache.local.get(LOCAL_KEY.STYLE_ID);
-        let fabricNo = cache.local.get(LOCAL_KEY.FABRIC_ID);
+      let styleNo = cache.local.get(LOCAL_KEY.STYLE_ID);
+      let fabricNo = cache.local.get(LOCAL_KEY.FABRIC_ID);
       getDiyTypes(styleNo, fabricNo)
         .then(resp => {
           let data = resp || [];
@@ -62,7 +64,8 @@
             this.selectItemList.push({
               key: item.itemNo,
               imgUrl: item.itemImg,
-              name: item.itemName
+              name: item.itemName,
+              enable: item.enable
             })
           })
         })

@@ -12,13 +12,13 @@
       return {
           dataSource: [{
               key: '1',
-              name: '极速退货'
+              name: '极速退款'
           }, {
               key: '2',
-              name: '正品保证'
+              name: '质量保证'
           }, {
               key: '3',
-              name: '七天退还'
+              name: '七天退换'
           }]
       }
     },
