@@ -4,7 +4,7 @@
     <!--
     <span class="diy__previous" @click="previous"></span>
     -->
-    <h3 class="specialCustomization__title">其他个性化定制</h3>
+    <h3 class="specialCustomization__title">其他个性化定制 (任选一种)</h3>
     <div class="specialCustomization__item">
       <div v-for="(item, index) in selectItemList" :key="index" class="specialCustomization__item--margin">
         <div @click="getDiyId(item.key, item)">
